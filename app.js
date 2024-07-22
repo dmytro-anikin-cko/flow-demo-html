@@ -3,6 +3,9 @@
     // Insert your public key here
     const PUBLIC_KEY = "pk_sbox_guri7tp655hvceb3qaglozm7gee";
   
+    /* 
+        Creating new payment session 
+    */
     const response = await fetch("https://api.sandbox.checkout.com/payment-sessions", { 
         method: "POST", 
         headers: {
@@ -19,7 +22,7 @@
             },
             billing: {
               address: {
-                country: "NL", // GB
+                country: "GB", // GB
               },
             },
             success_url: "https://checkout.checkout.test.success",
@@ -33,10 +36,13 @@
       return;
     }
   
+    /* 
+        Initialize and mount Flow
+    */
     const checkout = await CheckoutWebComponents({
       publicKey: PUBLIC_KEY,
       environment: "sandbox",
-      locale: "fr-FR", // en-GB
+      locale: "en-GB", // en-GB, fr-FR...
       paymentSession,
       onReady: () => {
         console.log("onReady");
