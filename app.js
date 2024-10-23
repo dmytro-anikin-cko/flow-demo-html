@@ -24,6 +24,17 @@
             country: "GB", // GB
           },
         },
+        payment_method_configuration: {
+          card: {
+            store_payment_details: "enabled"
+          },
+          applepay: {
+            store_payment_details: "enabled"
+          },
+          googlepay: {
+            store_payment_details: "enabled"
+          },
+        },
         success_url: "https://checkout.checkout.test.success",
         failure_url: "https://checkout.checkout.test.failure",
       }),
