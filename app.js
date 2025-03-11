@@ -13,26 +13,37 @@
       },
       body: JSON.stringify({
         processing_channel_id: "pc_w2njpb6jbjjujgcz5dgzxdn5mm",
-        currency: "EUR",
-        amount: 1345,
-        reference: `ORD-2234`,
+        currency: "EUR", // Necessary for iDeal and Sofort
+        amount: 1000,
+        reference: `ORD-1234`,
         "3ds": {
           enabled: true,
         },
         billing: {
           address: {
-            country: "GB", // GB
+            country: "NL", // Necessary for SEPA
+            address_line1: "Osdorpplein 137", // NECESSARY!!!! Can be random for Klarna
+            // address_line2: "Flat 456", // Not necessary. Can be random for Klarna
+            city: "Amsterdam", // NECESSARY!!!! Can be random for Klarna
+            zip: "1068 SR", // NECESSARY!!!! Can be random for Klarna
           },
         },
+        items: [
+          {
+            name: "test",
+            quantity: 1,
+            unit_price: 1000,
+          },
+        ],
         payment_method_configuration: {
           card: {
-            store_payment_details: "enabled"
+            store_payment_details: "enabled",
           },
           applepay: {
-            store_payment_details: "enabled"
+            store_payment_details: "enabled",
           },
           googlepay: {
-            store_payment_details: "enabled"
+            store_payment_details: "enabled",
           },
         },
         success_url: "https://checkout.checkout.test.success",
@@ -54,7 +65,9 @@
   const checkout = await CheckoutWebComponents({
     publicKey: PUBLIC_KEY,
     environment: "sandbox",
-    locale: "en-GB", // en-GB, fr-FR...
+    locale: "fr-FR", // en-GB, fr-FR...
+    /* Custom PAY button */
+    // showPayButton: false,
     paymentSession,
     onReady: () => {
       console.log("onReady");
@@ -82,6 +95,17 @@
   const flowComponent = checkout.create("flow");
 
   flowComponent.mount(document.getElementById("flow-container"));
+
+  /* Custom PAY button */
+  // const submitButton = document.getElementById("submit");
+
+  // submitButton.addEventListener("click", () => {
+  //   console.log(flowComponent.isValid());
+
+  //   if (flowComponent.isValid()) {
+  //     flowComponent.submit();
+  //   }
+  // });
 })();
 
 // Helper function to show toasts
